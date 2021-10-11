@@ -87,6 +87,7 @@ class Key {
     ) {
       this.appendIcon(this.config.value.lower);
     } else {
+      // console.log(this.config);
       this.domElement.innerHTML =
         this.config.value[Key.currentLanguage][Key.currentCase];
     }
