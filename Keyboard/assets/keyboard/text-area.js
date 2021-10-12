@@ -15,9 +15,17 @@ class TextArea {
   }
 
   insertText(text) {
-    this.value = `${this.value.slice(0, this.position)}${text}${this.value.slice(this.position)}`;
+    this.value = `${this.value.slice(
+      0,
+      this.position
+    )}${text}${this.value.slice(this.position)}`;
     this.domElement.value = this.value;
     this.moveHorizontally(text.length);
+    // console.log(
+    // 	typeof this.value,
+    // 	this.position,
+    // 	this.value[this.position - 1]
+    // );
   }
 
   move(direction) {
@@ -42,7 +50,7 @@ class TextArea {
 
   moveVertically(dir) {
     if (isNaN(dir)) {
-      throw new Error('The value has to be a number');
+      throw new Error('The value has to be a number to move vertically');
     }
 
     if (dir === -1) {
@@ -57,21 +65,62 @@ class TextArea {
       '\n',
       this.position - 1
     );
-    if (lastBreak < 0) this.updateCursor(0);
+    if (lastBreak === -1) this.updateCursor(0);
     else {
       const offset = this.position - lastBreak;
       let prevBreak =
         this.domElement.value.lastIndexOf('\n', lastBreak - 1) + 1;
-      console.log(prevBreak);
 
-      // if (prevBreak < 0) prevBreak = 0;
       const newPos = prevBreak + Math.min(offset - 1, lastBreak - prevBreak);
       this.updateCursor(newPos);
     }
   }
 
+  moveVerticallyDown() {
+    const followingBreak = this.value.indexOf('\n', this.position);
+    if (followingBreak === -1) this.updateCursor(this.value.length);
+    else {
+      let lastBreak = this.value.lastIndexOf('\n', this.position - 1);
+      if (lastBreak < 0) lastBreak = 0;
+      const offset = this.position - lastBreak;
+      let nextBreak = this.value.indexOf('\n', followingBreak + 1);
+      if (nextBreak === -1) nextBreak = this.value.length;
+      const newPos =
+        followingBreak + Math.min(offset + 1, nextBreak - followingBreak);
+      this.updateCursor(newPos);
+    }
+  }
+
+  erase(action) {
+    if (action === 'Backspace') this.backspace();
+    if (action === 'Delete') this.delete();
+  }
+
+  backspace() {
+    if (this.position !== 0) {
+      this.value = `${this.value.slice(0, this.position - 1)}${this.value.slice(
+        this.position
+      )}`;
+      this.domElement.value = this.value;
+      this.moveHorizontally(-1);
+    }
+  }
+
+  delete() {
+    if (this.position !== this.value.length) {
+      this.value = `${this.value.slice(0, this.position)}${this.value.slice(
+        this.position + 1
+      )}`;
+      this.domElement.value = this.value;
+      this.moveHorizontally(0);
+    }
+  }
+
   updateCursor(position) {
-    this.position = position;
+    let newPos = position;
+    if (newPos > this.value.length) newPos = this.value.length;
+    if (newPos < 0) newPos = 0;
+    this.position = newPos;
     this.domElement.selectionStart = this.position;
     this.domElement.selectionEnd = this.position;
   }

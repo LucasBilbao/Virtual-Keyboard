@@ -18,6 +18,22 @@ html {
   box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
   user-select: none;
   transition: bottom 0.5s ease-out;
+  animation-name: rise;
+  animation-duration: 1.5s;
+}
+
+@keyframes rise{
+  0%{
+    bottom: -100%;
+  }
+  50%{
+    bottom: -50%;
+    height: 300px;
+  }
+  100%{
+    bottom: 0;
+    height: auto;
+  }
 }
 
 .keyboard-hidden {
@@ -48,14 +64,17 @@ html {
   padding: 0;
   -webkit-tap-highlight-color: transparent;
   position: relative;
+  transition: all linear 100ms;
 }
 
 .keyboard_key:active {
   background-color: rgba(255, 255, 255, 0.11);
+  /* transition: all ease-out 50ms; */
 }
 
-.pressed{
+.pressed {
   background-color: rgba(255, 255, 255, 0.11);
+  /* transition: all ease-out 50ms; */
 }
 
 .keyboard_key--wide {
