@@ -87,7 +87,6 @@ class Key {
     ) {
       this.appendIcon(this.config.value.lower);
     } else {
-      // console.log(this.config);
       this.domElement.innerHTML =
         this.config.value[Key.currentLanguage][Key.currentCase];
     }
@@ -111,26 +110,28 @@ class Key {
           this.config.id === 'Enter' ||
           this.config.id === 'Tab'
         ) {
-          imported.textArea.appendText(this.specialChars[this.config.id]);
+          imported.textArea.insertText(this.specialChars[this.config.id]);
         } else if (
           this.config.id === 'ControlLeft' ||
           this.config.id === 'ControlRight' ||
           this.config.id === 'AltLeft' ||
+          this.config.id === 'AltRight' ||
           this.config.id === 'Backspace' ||
+          this.config.id === 'Delete' ||
           this.config.id === 'Win'
         ) {
           return;
         } else if (this.config.id === 'CapsLock') {
           this.activate();
         } else if (
-          this.config.id === 'AltRight' ||
+          this.config.id === 'ArrowRight' ||
           this.config.id === 'ArrowLeft' ||
           this.config.id === 'ArrowUp' ||
           this.config.id === 'ArrowDown'
         ) {
-          imported.textArea.updateCursorDirection(this.config.id);
+          imported.textArea.move(this.config.id.substring());
         } else {
-          imported.textArea.appendText(this.domElement.innerHTML);
+          imported.textArea.insertText(this.domElement.innerHTML);
           // textArea.setCursor();
         }
       });
@@ -166,9 +167,9 @@ class Key {
     imported.refresh(this.config.id);
   }
 
-  reset(name) {
+  reset(caller) {
     if (this.config.hasSecondary) {
-      if (name.substring(0, 5) === 'Shift') {
+      if (caller.substring(0, 5) === 'Shift') {
         if (this.config.value[Key.currentLanguage].shiftSensitivity) {
           this.domElement.innerHTML =
             this.config.value[Key.currentLanguage][Key.currentCase];
@@ -200,8 +201,9 @@ document.addEventListener('keydown', (e) => {
   if (key) {
     e.preventDefault();
     key.domElement.classList.add('pressed');
-
-    key.domElement.click();
+    if (!e.ctrlKey) {
+      key.domElement.click();
+    }
     if (key.config.id.substring(0, 5) === 'Shift') {
       key.activate();
     }

@@ -759,7 +759,7 @@ const keyboard = [
   },
   {
     id: 'Backslash',
-    hasSecondary: false,
+    hasSecondary: true,
     value: {
       ge: {
         lower: '\\',

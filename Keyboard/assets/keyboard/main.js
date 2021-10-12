@@ -16,11 +16,8 @@ function refresh(name) {
   keys.forEach((item) => item.reset(name));
 }
 
-const s = 13;
-
 function findElement(find) {
   return keys.find((item) => {
-    // console.log(item.config.id, item.config.id === find);
     return item.config.id === find;
   });
 }

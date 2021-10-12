@@ -95,7 +95,7 @@ li {
   width: auto;
 }
 
-@media screen and (max-width: 65rem) {
+@media screen and (max-width: 65.625rem) {
   .wrapper {
     flex-direction: column;
   }
@@ -104,6 +104,6 @@ li {
     right: 0;
     left: 2.1875rem;
 
-    width: 18.75rem;
+    width: 30.75rem;
   }
 }
