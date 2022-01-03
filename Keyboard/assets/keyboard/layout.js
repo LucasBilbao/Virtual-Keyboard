@@ -11,7 +11,7 @@ document.body.appendChild(hr);
 // div.wrapper
 let wrapper = document.createElement('div');
 wrapper.setAttribute('class', 'wrapper');
-wrapper.setAttribute('id', 'wrapper')
+wrapper.setAttribute('id', 'wrapper');
 document.body.appendChild(wrapper);
 
 // div.feature-wrap
@@ -42,7 +42,7 @@ li1.innerHTML = `Supported languages: <strong class="coloring">English</strong> 
 
 li2.innerHTML = `Based on the <strong>Windows</strong> keyboard`;
 
-li3.innerHTML = `To change the language press <strong>Ctrl + Shift</strong>`;
+li3.innerHTML = `To change the language press <strong>Ctrl + Alt</strong>`;
 
 ul.appendChild(li1);
 ul.appendChild(li2);
